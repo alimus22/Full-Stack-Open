@@ -1,72 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-
-const Header = (props) => {
-  console.log(props)
-  return (
-    <h1>{props.course}</h1>
-  )
-}
-
-const Part = (props) => {
-  console.log(props)
-  return (
-    <p>
-      {props.title} {props.noexercises}
-    </p>
-  )
-}
-
-const Content = (props) => {
-  return (
-    <div>
-      <Part title={props.parts[0].name} noexercises={props.parts[0].exercises} />
-      <Part title={props.parts[1].name} noexercises={props.parts[1].exercises} />
-      <Part title={props.parts[2].name} noexercises={props.parts[2].exercises} />
-    </div>
-  )
-}
+const App = (props) => {
   
+	const [left, setLeft] = useState(0) 
+	const [right, setRight] = useState(0)
+	const [allClicks, setAll] = useState([])
 
+	const handleLeftClick = () => {
+		setAll(allClicks.concat('L'))
+		setLeft(left + 1)
+	} 
 
-const Total = (props) => {
-  var total = 0;
-  for(var i = 0; i < 3; i++) {
-    total += props.parts[i].exercises;
-  }
-  return (
-    <p>
-      Number of exercises {total}
-    </p>
-  )
+	const handleRightClick = () => {
+		setAll(allClicks.concat('R'))
+		setRight(right + 1)
+	}
+
+	return (
+		<div>
+			Left Click: {left}
+			<button onClick={handleLeftClick}>Left</button>	
+			<button onClick={handleRightClick}>Right</button>
+			Right Click: {right}
+			<p>{allClicks.join(' ')}</p>
+		</div>
+	)
 }
 
-const App = () => {
-  const course = { 
-  name: 'Half Stack application development',
-  parts: [
-    {
-      name: 'Fundamentals of React',
-      exercises: 10
-    },
-    {
-      name: 'Using props to pass data',
-      exercises: 7
-    },
-    {
-      name: 'State of a component',
-      exercises: 14
-    }
-  ]
-  }
-  return (
-    <div>
-      <Header course = {course.name} />
-      <Content parts = {course.parts}/>
-      <Total parts = {course.parts} />
-    </div>
-  )
-}
- 
-
-export default App;
+export default App
