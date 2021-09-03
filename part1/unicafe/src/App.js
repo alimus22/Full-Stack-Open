@@ -17,10 +17,20 @@ const Titles = ({ text, level }) => {
 
 const Button = (props) => <button onClick={props.function}>{props.text}</button>
 
-const StatisticLine = (props) => <div>{props.text}: {props.value}</div>
-
+const StatisticLine = (props) => {
+  return (
+    <table>
+      <tbody>
+        <tr>
+          <td>{props.text}: </td>
+          <td>{props.value} </td>
+        </tr>
+      </tbody>
+    </table>
+  )
+}
 const Statistics = ({ good, neutral, bad }) => {
-  if (good == 0 && neutral == 0 && bad == 0) {
+  if (good === 0 && neutral === 0 && bad === 0) {
     return <div>No feedback given</div>
   }
   const average = (good, neutral, bad) => (good - bad) / (good + neutral + bad)
