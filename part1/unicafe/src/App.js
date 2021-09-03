@@ -17,7 +17,27 @@ const Titles = ({ text, level }) => {
 
 const Button = (props) => <button onClick={props.function}>{props.text}</button>
 
-const Statistics = (props) => <div>{props.text}: {props.value}</div>
+const StatisticLine = (props) => <div>{props.text}: {props.value}</div>
+
+const Statistics = ({ good, neutral, bad }) => {
+  if (good == 0 && neutral == 0 && bad == 0) {
+    return <div>No feedback given</div>
+  }
+  const average = (good, neutral, bad) => (good - bad) / (good + neutral + bad)
+
+  const positivity = (good, neutral, bad) => (good / (good + neutral + bad) * 100)
+
+  return (
+    <div>
+      <StatisticLine text={'Good'} value={good} />
+      <StatisticLine text={'Neutral'} value={neutral} />
+      <StatisticLine text={'Bad'} value={bad} />
+      <StatisticLine text={'All'} value={good + bad + neutral} />
+      <StatisticLine text={'Average'} value={average(good, neutral, bad)} />
+      <StatisticLine text={'Positivity'} value={positivity(good, neutral, bad) + ' %'} />
+    </div>
+  )
+}
 
 
 const App = () => {
@@ -37,17 +57,6 @@ const App = () => {
     setBad(bad + 1)
   }
 
-  const average = (good, neutral, bad) => {
-    if (good === 0 && neutral === 0 && bad === 0) return 0
-
-    return (good - bad) / (good + neutral + bad)
-  }
-
-  const positivity = (good, neutral, bad) => {
-    if (good === 0 && neutral === 0 && bad === 0) return 0
-    return (good / (good + neutral + bad) * 100)
-  }
-
   return (
     <div>
       <Titles text={'Give feedback'} level={2} />
@@ -55,12 +64,7 @@ const App = () => {
       <Button function={addNeutral} text={'Neutral'} />
       <Button function={addBad} text={'Bad'} />
       <Titles text={'Statistics'} level={1} />
-      <Statistics text={'Good'} value={good} />
-      <Statistics text={'Neutral'} value={neutral} />
-      <Statistics text={'Bad'} value={bad} />
-      <Statistics text={'All'} value={good + bad + neutral} />
-      <Statistics text={'Average'} value={average(good, neutral, bad)} />
-      <Statistics text={'Positivity'} value={positivity(good, neutral, bad) + ' %'} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
