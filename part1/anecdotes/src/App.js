@@ -1,5 +1,34 @@
 import React, { useState } from 'react'
 
+const Text = (props) => {
+  return (
+    <h2>
+      {props.text}
+    </h2>
+  )
+}
+
+const TopAnecdote = (props) => {
+  var max = 0
+  for (const numOfVotes of props.votes) {
+    if (numOfVotes > max) {
+      max = numOfVotes
+    }
+  }
+  if (max === 0) {
+    return (
+      <div>
+        No votes yet.
+      </div>
+    )
+  }
+  return (
+    <div>
+      {props.anecdotes[props.votes.indexOf(max)]}
+    </div>
+  )
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -15,8 +44,8 @@ const App = () => {
   const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
   const vote = () => {
-    const copy = { ...votes }
-    copy[selected]++
+    votes[selected] += 1
+    const copy = [...votes]
 
     return setVotes(copy)
   }
@@ -25,10 +54,13 @@ const App = () => {
 
   return (
     <div>
+      <Text text={'Anecdote of the Day'} />
       <p>{anecdotes[selected]}</p>
       <p>This citation has: {votes[selected]} votes</p>
       <button onClick={vote}>Vote</button>
       <button onClick={randomAnecdote}>Next anecdote</button>
+      <Text text={'Anecdote with Most Votes'} />
+      <TopAnecdote anecdotes={anecdotes} votes={votes} />
     </div>
   )
 }
