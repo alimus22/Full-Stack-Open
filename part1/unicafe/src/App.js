@@ -27,11 +27,11 @@ const StatisticLine = (props) => {
         </tr>
       </tbody>
     </table>
-  )
+    )
 }
 const Statistics = ({ good, neutral, bad }) => {
   if (good === 0 && neutral === 0 && bad === 0) {
-    return <div>No feedback given</div>
+    return <table><tbody><tr><td>No feedback given</td></tr></tbody></table>
   }
   const average = (good, neutral, bad) => (good - bad) / (good + neutral + bad)
 
