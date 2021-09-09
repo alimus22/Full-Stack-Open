@@ -49,7 +49,7 @@ const App = () => {
 
     return setVotes(copy)
   }
-
+    
   const randomAnecdote = () => setSelected(Math.floor(Math.random() * anecdotes.length))
 
   return (
