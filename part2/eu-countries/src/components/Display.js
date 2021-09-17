@@ -12,7 +12,8 @@ const Display = ({ countries, filter }) => {
   const displayInformation = (country) => {
     return (
       <div key={country.name}>
-        <p>Name: {country.name}</p>
+        <h2>Name: {country.name}</h2>
+        <p>Capital: {country.capital}</p>
         <p>Population: {country.population} </p>
         <p>Languages:</p>
         <ul>
