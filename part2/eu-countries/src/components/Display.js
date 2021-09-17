@@ -14,13 +14,13 @@ const Display = ({ countries, filter }) => {
   } else if (selectedCountries.length === 1) {
     return (
       <div key={selectedCountries[0].name}>
-        <Country country={selectedCountries[0]} show={true} />
+        <Country country={selectedCountries[0]} />
       </div>
     );
   } else {
     return selectedCountries.map((country) => (
       <div key={country.name}>
-        <Country country={country} show={false} />
+        <Country country={country} />
       </div>
     ));
   }

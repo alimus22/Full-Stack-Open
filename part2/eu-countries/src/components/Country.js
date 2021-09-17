@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Button from "./Button";
 
 const api_key = process.env.REACT_APP_API_KEY;
 
-const Country = ({ country, show }) => {
-  const [showInfo, setShowInfo] = useState(show);
+const Country = ({ country }) => {
+  const [showInfo, setShowInfo] = useState(false);
   const [weather, setWeather] = useState([]);
 
   useEffect(() => {
@@ -37,18 +38,22 @@ const Country = ({ country, show }) => {
         </p>
         <h2>Weather in {country.capital}</h2>
         <p>Temperature: {weather.temp_c}</p>
-        <img src={weather.condition.icon.icon} alt="Condition"></img>
+        <img src={weather.condition.icon} alt="Condition"></img>
       </div>
     );
   };
 
   if (showInfo) {
+    console.log("From if(showInfo)");
     return (
       <div>
-        <button onClick={() => setShowInfo(!showInfo)}>
-          {showInfo ? "Hide" : "Show"}
-        </button>
         {displayInformation(country)}
+        <Button
+          onClickFunction={setShowInfo}
+          string1={"Hide"}
+          string2={"Show"}
+          boolean={showInfo}
+        />
       </div>
     );
   }
@@ -56,9 +61,12 @@ const Country = ({ country, show }) => {
   return (
     <div>
       {country.name}
-      <button onClick={() => setShowInfo(!showInfo)}>
-        {showInfo ? "Hide" : "Show"}
-      </button>
+      <Button
+        onClickFunction={setShowInfo}
+        string1={"Hide"}
+        string2={"Show"}
+        boolean={showInfo}
+      />
     </div>
   );
 };
