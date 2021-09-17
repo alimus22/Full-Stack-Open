@@ -22,7 +22,7 @@ const Display = ({ countries, filter }) => {
           ))}
         </ul>
         <p>
-          Flag: <img src={country.flag} alt="Algerian flag"></img>
+          Flag: <img src={country.flag} alt="Flag"></img>
         </p>
       </div>
     );
