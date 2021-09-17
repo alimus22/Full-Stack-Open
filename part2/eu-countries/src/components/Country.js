@@ -18,7 +18,7 @@ const Country = ({ country, show }) => {
       .then((response) => {
         setWeather(response.data.current);
       });
-  });
+  }, [country.capital]);
 
   const displayInformation = (country) => {
     return (
