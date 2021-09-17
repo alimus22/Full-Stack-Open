@@ -34,7 +34,8 @@ const Country = ({ country }) => {
           ))}
         </ul>
         <p>
-          Flag: <img src={country.flag} alt="Flag"></img>
+          Flag:{" "}
+          <img src={country.flag} width="400" height="300" alt="Flag"></img>
         </p>
         <h2>Weather in {country.capital}</h2>
         <p>Temperature: {weather.temp_c}</p>
