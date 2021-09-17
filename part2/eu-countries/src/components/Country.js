@@ -3,23 +3,44 @@ import axios from "axios";
 
 const api_key = process.env.REACT_APP_API_KEY;
 
-const Country = ({ country, display }) => {
-  const [showInfo, setShowInfo] = useState(false);
+const Country = ({ country, show }) => {
+  const [showInfo, setShowInfo] = useState(show);
   const [weather, setWeather] = useState([]);
-
-  const param = {
-    access_key: "YOUR_ACCESS_KEY",
-    query: country.capital,
-  };
 
   useEffect(() => {
     axios
-      .get("https://api.weatherstack.com/current", { param })
+      .get("http://api.weatherapi.com/v1/current.json", {
+        params: {
+          key: api_key,
+          q: country.capital,
+        },
+      })
       .then((response) => {
-        console.log(response.data);
-        setWeather(response.data);
+        setWeather(response.data.current);
       });
   });
+
+  const displayInformation = (country) => {
+    return (
+      <div key={country.name}>
+        <h2>Name: {country.name}</h2>
+        <p>Capital: {country.capital}</p>
+        <p>Population: {country.population} </p>
+        <p>Languages:</p>
+        <ul>
+          {country.languages.map((language) => (
+            <li key={language.name}>{language.name}</li>
+          ))}
+        </ul>
+        <p>
+          Flag: <img src={country.flag} alt="Flag"></img>
+        </p>
+        <h2>Weather in {country.capital}</h2>
+        <p>Temperature: {weather.temp_c}</p>
+        <img src={weather.condition.icon.icon} alt="Condition"></img>
+      </div>
+    );
+  };
 
   if (showInfo) {
     return (
@@ -27,7 +48,7 @@ const Country = ({ country, display }) => {
         <button onClick={() => setShowInfo(!showInfo)}>
           {showInfo ? "Hide" : "Show"}
         </button>
-        {display(country)}
+        {displayInformation(country)}
       </div>
     );
   }

@@ -9,34 +9,18 @@ const Display = ({ countries, filter }) => {
     country.name.toUpperCase().includes(filter.toUpperCase())
   );
 
-  const displayInformation = (country) => {
-    return (
-      <div key={country.name}>
-        <h2>Name: {country.name}</h2>
-        <p>Capital: {country.capital}</p>
-        <p>Population: {country.population} </p>
-        <p>Languages:</p>
-        <ul>
-          {country.languages.map((language) => (
-            <li key={language.name}>{language.name}</li>
-          ))}
-        </ul>
-        <p>
-          Flag: <img src={country.flag} alt="Flag"></img>
-        </p>
-      </div>
-    );
-  };
-
   if (selectedCountries.length > 10) {
     return <div>Please enter a more specific research !</div>;
   } else if (selectedCountries.length === 1) {
-    const country = selectedCountries[0];
-    return displayInformation(country);
+    return (
+      <div key={selectedCountries[0].name}>
+        <Country country={selectedCountries[0]} show={true} />
+      </div>
+    );
   } else {
     return selectedCountries.map((country) => (
       <div key={country.name}>
-        <Country country={country} display={displayInformation} />
+        <Country country={country} show={false} />
       </div>
     ));
   }
