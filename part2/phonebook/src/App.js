@@ -3,6 +3,7 @@ import Filter from "./components/Filter";
 import Display from "./components/Display";
 import PersonForm from "./components/PersonForm";
 import axios from "axios";
+import services from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,8 +12,8 @@ const App = () => {
   const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
+    services.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
     });
   }, []);
 
@@ -39,7 +40,18 @@ const App = () => {
         name: newName,
         number: newPhone,
       };
-      setPersons(persons.concat(newPerson));
+      services
+        .create(newPerson)
+        .then((returnedPersons) => {
+          setPersons(persons.concat(returnedPersons));
+          setNewName("");
+          setNewPhone("");
+        })
+        .catch((error) => {
+          alert("An error occured !");
+          setNewName("");
+          setNewPhone("");
+        });
     }
   };
 
