@@ -121,6 +121,14 @@ const App = () => {
           setTimeout(() => {
             setNotificationMsg(null);
           }, 5000);
+        })
+        .catch(() => {
+          setNotificationMsg(`${person.name} no longer registered.`);
+          setNotificationStyle(errorStyle);
+          setPersons(persons.filter((p) => p.id !== person.id));
+          setTimeout(() => {
+            setNotificationMsg(null);
+          }, 5000);
         });
     }
   };
