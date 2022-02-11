@@ -1,5 +1,4 @@
 import React from "react";
-import services from "../services/persons";
 
 const Display = ({ person, deleteEntry }) => {
   return (

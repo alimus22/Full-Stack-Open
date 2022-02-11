@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import Display from "./components/Display";
 import PersonForm from "./components/PersonForm";
-import axios from "axios";
 import services from "./services/persons";
+import "./index.css";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -42,11 +42,10 @@ const App = () => {
         `${newName} is already in the phonebook. Replace the old number with a new one ?`
       );
       if (result) {
-        let found = persons.find((person) => {
-          if (person.name.toLowerCase() === "aa".toLowerCase()) {
-            return person;
-          }
-        });
+        let found = persons.find(
+          (person) => person.name.toLowerCase() === newName.toLowerCase()
+        );
+
         found.number = newPhone;
         services.update(found).then((returnedPersons) => {
           setPersons(
@@ -88,7 +87,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <PersonForm
         handleNameChange={handleNameChange}
