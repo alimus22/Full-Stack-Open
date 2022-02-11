@@ -1,4 +1,12 @@
 import React from "react";
+import services from "../services/persons";
+
+const deleteEntry = (person) => {
+  const result = window.confirm(`Delete ${person.name} ?`);
+  if (result) {
+    services.deleteEntry(person.id);
+  }
+};
 
 const Display = ({ persons, filter }) => {
   let entries = [];
@@ -10,9 +18,10 @@ const Display = ({ persons, filter }) => {
     );
   }
   return entries.map((person) => (
-    <div key={person.name}>
+    <li key={person.id}>
       {person.name} {person.number}
-    </div>
+      <button onClick={() => deleteEntry(person)}>Delete</button>
+    </li>
   ));
 };
 

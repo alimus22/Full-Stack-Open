@@ -67,7 +67,9 @@ const App = () => {
         addEntry={addEntry}
       />
       <h2>Numbers</h2>
-      <Display persons={persons} filter={filter} />
+      <ul>
+        <Display persons={persons} filter={filter} />
+      </ul>
     </div>
   );
 };
