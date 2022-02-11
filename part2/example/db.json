@@ -47,6 +47,12 @@
       "date": "2022-02-04T01:28:24.926Z",
       "important": true,
       "id": 8
+    },
+    {
+      "content": "RESTfull API",
+      "date": "2022-02-10T23:39:44.254Z",
+      "important": false,
+      "id": 9
     }
   ]
 }
