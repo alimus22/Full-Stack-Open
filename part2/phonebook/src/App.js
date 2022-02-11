@@ -3,13 +3,32 @@ import Filter from "./components/Filter";
 import Display from "./components/Display";
 import PersonForm from "./components/PersonForm";
 import services from "./services/persons";
+import Notification from "./components/Notification";
 import "./index.css";
 
 const App = () => {
+  const errorStyle = {
+    color: "red",
+    fontSize: 20,
+    fontStyle: "bold",
+    borderStyle: "solid",
+    borderRadius: 5,
+  };
+
+  const msgStyle = {
+    color: "green",
+    fontSize: 20,
+    fontStyle: "itallic",
+    borderStyle: "solid",
+    borderRadius: 5,
+  };
+
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newPhone, setNewPhone] = useState("");
   const [filter, setFilter] = useState("");
+  const [notificationMsg, setNotificationMsg] = useState(null);
+  const [notificationStyle, setNotificationStyle] = useState(msgStyle);
 
   useEffect(() => {
     services.getAll().then((initialPersons) => {
@@ -53,7 +72,10 @@ const App = () => {
           );
           setNewName("");
           setNewPhone("");
-          alert("Changes were successfully made !");
+          setNotificationMsg(`${found.name} number was successfully updated !`);
+          setTimeout(() => {
+            setNotificationMsg(null);
+          }, 5000);
         });
       }
     } else {
@@ -67,11 +89,21 @@ const App = () => {
           setPersons(persons.concat(returnedPersons));
           setNewName("");
           setNewPhone("");
+          setNotificationMsg(`${newPerson.name} was successfully added !`);
+          setTimeout(() => {
+            setNotificationMsg(null);
+          }, 5000);
         })
         .catch((error) => {
-          alert("An error occured !");
+          setNotificationMsg(
+            `An error occured. ${newPerson.name} was not saved!`
+          );
+          setNotificationStyle(errorStyle);
           setNewName("");
           setNewPhone("");
+          setTimeout(() => {
+            setNotificationMsg(null);
+          }, 5000);
         });
     }
   };
@@ -79,15 +111,24 @@ const App = () => {
   const deleteEntry = (person) => {
     const result = window.confirm(`Delete ${person.name} ?`);
     if (result) {
-      services.deleteEntry(person.id).then(() => {
-        setPersons(persons.filter((p) => p.id !== person.id));
-      });
+      services
+        .deleteEntry(person.id)
+        .then(() => {
+          setPersons(persons.filter((p) => p.id !== person.id));
+        })
+        .then(() => {
+          setNotificationMsg(`Entry successfully deleted !`);
+          setTimeout(() => {
+            setNotificationMsg(null);
+          }, 5000);
+        });
     }
   };
 
   return (
     <div>
       <h1>Phonebook</h1>
+      <Notification message={notificationMsg} style={notificationStyle} />
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <PersonForm
         handleNameChange={handleNameChange}
