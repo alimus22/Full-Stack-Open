@@ -64,15 +64,6 @@ const App = () => {
     }
   };
 
-  const personsToShow = persons.filter((person) => {
-    if (filter === "") {
-      return person;
-    }
-    if (person.name.toLowerCase().includes(filter.toLowerCase)) {
-      return person;
-    }
-  });
-
   return (
     <div>
       <h2>Phonebook</h2>
@@ -86,14 +77,17 @@ const App = () => {
       />
       <h2>Numbers</h2>
       <ul>
-        {personsToShow.map((person) => (
-          <Display
-            key={person.id}
-            person={person}
-            deleteEntry={() => deleteEntry(person)}
-          />
-        ))}
-        {/* <Display persons={persons} filter={filter} deleteEntry={deleteEntry} /> */}
+        {persons
+          .filter((person) =>
+            person.name.toLowerCase().includes(filter.toLowerCase())
+          )
+          .map((person) => (
+            <Display
+              key={person.id}
+              person={person}
+              deleteEntry={() => deleteEntry(person)}
+            />
+          ))}
       </ul>
     </div>
   );
