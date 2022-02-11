@@ -55,6 +55,24 @@ const App = () => {
     }
   };
 
+  const deleteEntry = (person) => {
+    const result = window.confirm(`Delete ${person.name} ?`);
+    if (result) {
+      services.deleteEntry(person.id).then(() => {
+        setPersons(persons.filter((p) => p.id !== person.id));
+      });
+    }
+  };
+
+  const personsToShow = persons.filter((person) => {
+    if (filter === "") {
+      return person;
+    }
+    if (person.name.toLowerCase().includes(filter.toLowerCase)) {
+      return person;
+    }
+  });
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -68,7 +86,14 @@ const App = () => {
       />
       <h2>Numbers</h2>
       <ul>
-        <Display persons={persons} filter={filter} />
+        {personsToShow.map((person) => (
+          <Display
+            key={person.id}
+            person={person}
+            deleteEntry={() => deleteEntry(person)}
+          />
+        ))}
+        {/* <Display persons={persons} filter={filter} deleteEntry={deleteEntry} /> */}
       </ul>
     </div>
   );
