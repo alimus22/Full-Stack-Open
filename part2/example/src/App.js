@@ -5,6 +5,21 @@ import noteService from "./services/notes";
 import Notification from "./components/Notification";
 import "./index.css";
 
+const Footer = () => {
+  const footerStyle = {
+    color: "green",
+    fontStyle: "italic",
+    fontSize: 16,
+  };
+
+  return (
+    <div style={footerStyle}>
+      <br />
+      <em>Note app, Powered By Ali Hanni</em>
+    </div>
+  );
+};
+
 const App = (props) => {
   const [notes, setNotes] = useState([]);
   const [newNote, setNewNote] = useState("");
@@ -79,6 +94,7 @@ const App = (props) => {
         <input value={newNote} onChange={handleNoteChange} />
         <button type="submit">Save</button>
       </form>
+      <Footer />
     </div>
   );
 };
