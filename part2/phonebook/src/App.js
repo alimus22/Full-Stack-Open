@@ -33,8 +33,30 @@ const App = () => {
     event.preventDefault();
     if (newName === "") {
       alert("Please enter a Name.");
-    } else if (persons.map((person) => person.name).includes(newName)) {
-      alert(`${newName} is already in the phonebook`);
+    } else if (
+      persons
+        .map((person) => person.name.toLowerCase())
+        .includes(newName.toLowerCase())
+    ) {
+      const result = window.confirm(
+        `${newName} is already in the phonebook. Replace the old number with a new one ?`
+      );
+      if (result) {
+        let found = persons.find((person) => {
+          if (person.name.toLowerCase() === "aa".toLowerCase()) {
+            return person;
+          }
+        });
+        found.number = newPhone;
+        services.update(found).then((returnedPersons) => {
+          setPersons(
+            persons.map((person) => (person.id !== found.id ? person : found))
+          );
+          setNewName("");
+          setNewPhone("");
+          alert("Changes were successfully made !");
+        });
+      }
     } else {
       const newPerson = {
         name: newName,
